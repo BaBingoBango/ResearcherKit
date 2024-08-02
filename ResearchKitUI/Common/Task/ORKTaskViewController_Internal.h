@@ -29,9 +29,10 @@
  */
 
 
-#import <ResearchKit/ORKActiveStep_Internal.h>
-#import <ResearchKitUI/ORKReviewStepViewController.h>
-#import <HealthKit/HealthKit.h>
+#import <ResearchKit/ORKTaskViewController_Private.h>
+#import <ResearchKit/ORKReviewStepViewController.h>
+// @import HealthKit;
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -39,26 +40,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ORKTaskViewController () <ORKReviewStepViewControllerDelegate, UIViewControllerRestoration>
 
-- (instancetype)commonInitWithTask:(nullable id<ORKTask>)task taskRunUUID:(nullable NSUUID *)taskRunUUID;
-
-- (nullable NSSet<HKObjectType *> *)requestedHealthTypesForRead;
-- (nullable NSSet<HKObjectType *> *)requestedHealthTypesForWrite;
+// - (nullable NSSet<HKObjectType *> *)requestedHealthTypesForRead;
+// - (nullable NSSet<HKObjectType *> *)requestedHealthTypesForWrite;
 
 // Any StepVC contains a vertical scroll view should register here.
 // So taskVC can monitor scroll view's content offset and update hairline's alpha.
 @property (nonatomic, weak, nullable) UIScrollView *registeredScrollView;
 
-@property (nonatomic, weak, nullable) NSString *restoredStepIdentifier;
-@property (nonatomic, nullable) NSMutableArray *managedStepIdentifiers;
-@property (nonatomic, nullable) NSMutableDictionary *managedResults;
-
 - (void)learnMoreButtonPressedWithStep:(ORKLearnMoreInstructionStep *)learnMoreInstructionStep fromStepViewController:(ORKStepViewController *)stepViewController;
 
 - (void)flipToPageWithIdentifier:(NSString *)identifier forward:(BOOL)forward animated:(BOOL)animated;
 
-- (void)restartTask;
-
 - (void)flipToFirstPage;
+
 - (void)flipToLastPage;
 
 @end

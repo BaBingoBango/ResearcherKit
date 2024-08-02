@@ -29,50 +29,51 @@
  */
 
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import <ResearchKit/ORKRecorder.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ORKPedometerRecorder;
+@class ORKHealthQuantityTypeRecorder;
 
-@protocol ORKPedometerRecorderDelegate <ORKRecorderDelegate>
+@protocol ORKHealthQuantityTypeRecorderDelegate <ORKRecorderDelegate>
 
 @optional
-- (void)pedometerRecorderDidUpdate:(ORKPedometerRecorder *)pedometerRecorder;
+- (void)healthQuantityTypeRecorderDidUpdate:(ORKHealthQuantityTypeRecorder *)healthQuantityTypeRecorder;
 
 @end
 
 
 /**
- A recorder that requests and collects device motion data from CoreMotion at a fixed frequency.
- 
- The accelerometer recorder continues to record if the application enters the
- background using UIApplication's background task support.
+ The `ORKHealthQuantityTypeRecorder` class represents a recorder for collecting real time sample data from HealthKit, such as heart rate, during
+ an active task.
  */
 ORK_CLASS_AVAILABLE
-@interface ORKPedometerRecorder : ORKRecorder
+@interface ORKHealthQuantityTypeRecorder : ORKRecorder
 
-@property (nonatomic, readonly, nullable) NSDate *lastUpdateDate;
+//@property (nonatomic, copy, readonly) HKQuantityType *quantityType;
 
-@property (nonatomic, readonly) NSInteger totalNumberOfSteps;
+//@property (nonatomic, copy, readonly) HKUnit *unit;
 
-// Negative if an invalid value.
-@property (nonatomic, readonly) NSInteger totalDistance;
+//@property (nonatomic, copy, readonly, nullable) HKQuantitySample *lastSample;
 
 /**
- Returns an initialized pedometer recorder.
+ Returns an initialized health quantity type recorder using the specified quantity type and unit.
  
  @param identifier          The unique identifier of the recorder (assigned by the recorder configuration).
+ @param quantityType        The quantity type that should be collected during the active task.
+ @param unit                The unit for the data that should be collected and serialized.
  @param step                The step that requested this recorder.
- @param outputDirectory     The directory in which the pedometer data should be stored.
+ @param outputDirectory     The directory in which the HealthKit data should be stored.
  
- @return An initialized pedometer recorder.
- */
-- (instancetype)initWithIdentifier:(NSString *)identifier
+ @return An initialized health quantity type recorder.
+*/
+/*- (instancetype)initWithIdentifier:(NSString *)identifier
+                healthQuantityType:(HKQuantityType *)quantityType
+                              unit:(HKUnit *)unit
                               step:(nullable ORKStep *)step
-                   outputDirectory:(nullable NSURL *)outputDirectory NS_DESIGNATED_INITIALIZER;
+                   outputDirectory:(nullable NSURL *)outputDirectory NS_DESIGNATED_INITIALIZER;*/
 
 @end
 

@@ -30,7 +30,8 @@
 
 
 #import <Foundation/Foundation.h>
-#import <HealthKit/HealthKit.h>
+// #import <HealthKit/HealthKit.h>
+#import <ResearchKit/ORKErrors.h>
 #import <ResearchKit/ORKDefines.h>
 
 
@@ -80,7 +81,7 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- An object that collects HKSample.
+ ORKHealthCollector collects HKSample.
  
  It cannot be initiated directly. 
  Use `addHealthCollectorWithSampleType:`to add one to a `ORKDataCollectionManager`.
@@ -91,28 +92,28 @@ ORK_CLASS_AVAILABLE
 /**
  HealthKit sample type.
  */
-@property (copy, readonly) HKSampleType *sampleType;
+// @property (copy, readonly) HKSampleType *sampleType;
 
 /**
  HealthKit unit into which data should be collected.
  */
-@property (copy, readonly) HKUnit *unit;
+// @property (copy, readonly) HKUnit *unit;
 
 /**
  Samples should be collected starting at this date.
  */
-@property (copy, readonly) NSDate *startDate;
+// @property (copy, readonly) NSDate *startDate;
 
 /**
  Last anchor already seen.
  */
-@property (copy, readonly) HKQueryAnchor *lastAnchor;
+// @property (copy, readonly) HKQueryAnchor *lastAnchor;
 
 @end
 
 
 /**
- An object that collects HKCorrelation.
+ ORKHealthCollector collects HKCorrelation.
  
  It cannot be initiated directly.
  Use `addHealthCorrelationCollectorWithCorrelationType:`to add one to a `ORKDataCollectionManager`.
@@ -123,33 +124,33 @@ ORK_CLASS_AVAILABLE
 /**
  HealthKit correlation type.
  */
-@property (copy, readonly) HKCorrelationType *correlationType;
+// @property (copy, readonly) HKCorrelationType *correlationType;
 
 /**
  Array of HKSampleType expected in the correlation.
  */
-@property (copy, readonly) NSArray<HKSampleType *> *sampleTypes;
+//@property (copy, readonly) NSArray<HKSampleType *> *sampleTypes;
 
 /**
  Array of HKUnit to use when serializing the samples collected (should be same size as sampleTypes).
  */
-@property (copy, readonly) NSArray<HKUnit *> *units;
+// @property (copy, readonly) NSArray<HKUnit *> *units;
 
 /**
  Samples should be collected starting at this date.
  */
-@property (copy, readonly) NSDate *startDate;
+//@property (copy, readonly) NSDate *startDate;
 
 /**
  Last anchor already seen.
  */
-@property (copy, readonly) HKQueryAnchor *lastAnchor;
+// @property (copy, readonly) HKQueryAnchor *lastAnchor;
 
 @end
 
 
 /**
- An object that collects CMMotionActivity.
+ ORKHealthCollector collects CMMotionActivity.
  
  It cannot be initiated directly.
  Use `addMotionActivityCollectorWithStartDate:`to add one to a `ORKDataCollectionManager`.

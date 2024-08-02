@@ -73,12 +73,12 @@
     return ORKPermissionNone;
 }
 
-- (NSSet<HKObjectType *> *)requestedHealthKitTypesForReading {
-    if ([self.pageTask respondsToSelector:@selector(requestedHealthKitTypesForReading)]) {
-        return [self.pageTask requestedHealthKitTypesForReading];
-    }
-    return nil;
-}
+//- (NSSet<HKObjectType *> *)requestedHealthKitTypesForReading {
+ //   if ([self.pageTask respondsToSelector:@selector(requestedHealthKitTypesForReading)]) {
+ //       return [self.pageTask requestedHealthKitTypesForReading];
+ //   }
+ //   return nil;
+//}
 
 #pragma mark - NSCopying
 

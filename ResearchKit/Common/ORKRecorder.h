@@ -30,8 +30,8 @@
  */
 
 
-#import <UIKit/UIKit.h>
-#import <HealthKit/HealthKit.h>
+@import UIKit;
+// @import HealthKit;
 #import <ResearchKit/ORKDefines.h>
 #import <Availability.h>
 
@@ -43,7 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class ORKStep;
 
 /**
- A base class for recorder configuration objects that can be attached to an active step.
+ The `ORKRecorderConfiguration` class is the abstract base class for recorder configurations
+ that can be attached to an active step (`ORKActiveStep`).
  
  Recorder configurations provide an easy way to collect CoreMotion
  or other sensor data into a serialized format during the duration of an active step.
@@ -105,13 +106,14 @@ ORK_CLASS_AVAILABLE
  If your recorder requires or would benefit from read access to HealthKit at
  runtime during the task, return the appropriate set of `HKSampleType` objects.
  */
-- (nullable NSSet<HKObjectType *> *)requestedHealthKitTypesForReading;
+// - (nullable NSSet<HKObjectType *> *)requestedHealthKitTypesForReading;
 
 @end
 
 
 /**
- A configuration object that collects accelerometer data during an active step.
+ The `ORKAccelerometerRecorderConfiguration` subclass configures
+ the collection of accelerometer data during an active step.
  
  Accelerometer data is serialized to JSON and returned as an `ORKFileResult` object.
  For details on the format, see `CMAccelerometerData+ORKJSONDictionary`.
@@ -153,7 +155,8 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- A configuration that records audio data during an active step.
+ The `ORKAudioRecorderConfiguration` class represents a configuration that records
+ audio data during an active step.
  
  An `ORKAudioRecorderConfiguration` generates an `ORKAudioRecorder` object.
  
@@ -202,7 +205,8 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- A configuration object that records device motion data during an active step.
+ The `ORKDeviceMotionRecorderConfiguration` class represents a configuration
+ that records device motion data during an active step.
  
  Device motion data is the processed motion data provided by CoreMotion and obtained
  from a `CMMotionManager` object. The data can include measures of the overall device orientation
@@ -248,7 +252,8 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- A configuration object that records pedometer data during an active step.
+ The `ORKPedometerRecorderConfiguration` class represents a configuration
+ that records pedometer data during an active step.
  
  Pedometer data consists of information about the processed steps provided by CoreMotion, obtained
  from a `CMPedometer` object. The pedometer object essentially reports the total number of steps taken since the
@@ -292,7 +297,8 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- A configuration object that records location data during an active step.
+ The `ORKLocationRecorderConfiguration` class represents a configuration
+ that records location data during an active step.
  
  The location data reported is the location provided by CoreLocation.
  
@@ -336,7 +342,101 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- A configuration object that records streaming audio data during an active step.
+ The `ORKHealthQuantityTypeRecorderConfiguration` class represents a configuration
+ that records data from a HealthKit quantity type during an active step.
+ 
+ Before you can use this configuration, you must use Xcode to enable the appropriate HealthKit entitlement
+ for your app.
+ 
+ HealthKit quantity type data is serialized to JSON and returned as an `ORKFileResult` object.
+ For details on the format, see `HKSample+ORKJSONDictionary`.
+ 
+ To use a recorder, include its configuration in the `recorderConfigurations` property
+ of an `ORKActiveStep` object, include that step in a task, and present it with
+ a task view controller.
+ */
+ORK_CLASS_AVAILABLE
+@interface ORKHealthQuantityTypeRecorderConfiguration : ORKRecorderConfiguration
+
+/**
+ Returns an initialized health quantity type recorder configuration using the specified quantity type and unit designation.
+ 
+ This method is the designated initializer.
+ 
+ @param identifier      The unique identifier of the recorder configuration.
+ @param quantityType    The quantity type that should be collected during the active task.
+ @param unit            The unit for the data that should be collected and serialized.
+ 
+ @return An initialized health quantity type recorder configuration.
+ */
+// - (instancetype)initWithIdentifier:(NSString *)identifier healthQuantityType:(HKQuantityType *)quantityType unit:(HKUnit *)unit NS_DESIGNATED_INITIALIZER;
+
+/**
+ Returns a new health quantity type recorder configuration initialized from data in the given unarchiver.
+ 
+ @param aDecoder    Coder from which to initialize the health quantity type recorder configuration.
+ 
+ @return A new health quantity type recorder configuration.
+ */
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+/**
+ The quantity type to be collected from HealthKit. (read-only)
+ */
+// @property (nonatomic, readonly, copy) HKQuantityType *quantityType;
+
+/**
+ The unit in which to serialize the data from HealthKit. (read-only)
+ */
+// @property (nonatomic, readonly, copy) HKUnit *unit;
+
+@end
+
+ORK_CLASS_AVAILABLE
+#if defined(__IPHONE_12_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_12_0
+API_AVAILABLE(ios(12.0))
+@interface ORKHealthClinicalTypeRecorderConfiguration : ORKRecorderConfiguration
+
+/**
+ Returns an initialized health clinical type recorder configuration using the specified clinical type.
+ 
+ This method is the designated initializer.
+ 
+ @param identifier              The unique identifier of the recorder configuration.
+ @param healthClinicalType      The HKClinicalType that should be collected during the active task.
+ @param healthFHIRResourceType  The HKFHIRResourceType that should be used as predicate while querying for the healthClinicalType. Providing a HKFHIRResourceType that does not correspond to a HKClinicalType will NOT generate any result.
+ 
+ @return An initialized health clinical type recorder configuration.
+ */
+// - (instancetype)initWithIdentifier:(NSString *)identifier
+//                healthClinicalType:(HKClinicalType *)healthClinicalType
+//            healthFHIRResourceType:(nullable HKFHIRResourceType)healthFHIRResourceType NS_DESIGNATED_INITIALIZER API_AVAILABLE(ios(12.0));
+
+/**
+ Returns a new health clinical type recorder configuration initialized from data in the given unarchiver.
+ 
+ @param aDecoder    Coder from which to initialize the health clinical type recorder configuration.
+ 
+ @return A new health clinical type recorder configuration.
+ */
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+
+/**
+ The HKClinicalType to be collected from HealthKit. (read-only)
+ */
+// @property (nonatomic, readonly, copy) HKClinicalType *healthClinicalType;
+
+/**
+ The HKFHIRResourceType to used as predicate for HKQuery. (read-only)
+ */
+// @property (nonatomic, readonly, copy) HKFHIRResourceType healthFHIRResourceType;
+
+@end
+#endif
+
+/**
+ The `ORKStreamingAudioRecorderConfiguration` class represents a configuration that records streaming
+ audio data during an active step.
  
  An `ORKStreamingAudioRecorderConfiguration` generates an `ORKStreamingAudioRecorder` object.
  
@@ -402,7 +502,7 @@ need to implement it.
 
 
 /**
- A recorder is the runtime companion to a recorder configuration object, and is
+ A recorder is the runtime companion to an `ORKRecorderConfiguration` object, and is
  usually generated by one.
  
  During active tasks, it is often useful to collect one or more pieces of data
